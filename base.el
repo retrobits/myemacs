@@ -1,4 +1,3 @@
-(put 'dired-find-alternate-file 'disabled nil)
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -12,6 +11,7 @@
   ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :background "SystemWindow" :foreground "SystemWindowText" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 105 :width normal :family "Consolas")))))
 
+(put 'dired-find-alternate-file 'disabled nil)
 ;;(add-to-list 'load-path "~/elisp/ruby")
 
 (global-set-key "\C-x\C-m" 'execute-extended-command)
