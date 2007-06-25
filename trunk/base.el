@@ -1,15 +1,16 @@
-(custom-set-variables
+;(custom-set-variables 
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(nxhtml-load t))
+;  '(nxhtml-load t))
+
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:stipple nil :background "SystemWindow" :foreground "SystemWindowText" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 105 :width normal :family "Consolas")))))
+ '(default ((t (:stipple nil :background "SystemWindow" :foreground "SystemWindowText" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :family "Consolas")))))
 
 (put 'dired-find-alternate-file 'disabled nil)
 ;;(add-to-list 'load-path "~/elisp/ruby")
@@ -24,6 +25,9 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
+(setq resize-minibuffer-mode t)
+;(setq resize-minibuffer-window-max-height 4)
+
 (defun w32-restore-frame ()
     "Restore a minimized frame"
      (interactive)
@@ -34,10 +38,28 @@
      (interactive)
      (w32-send-sys-command 61488))
 
-(w32-maximize-frame)
+(setq compilation-scroll-output t)
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq inhibit-startup-message t)
+
+(setq scroll-step 1)
+(setq scroll-conservatively 5)
+
+;(highlight-current-line-on t)
+
+;(global-set-key [delete] 'delete-char)
+
+;(set-background-color "dark slate gray")
+;(set-foreground-color "blanched almond") 
 
 (defalias 'qrr 'query-replace-regexp)
 (defalias 'lml 'list-matching-lines)
+
+(add-hook 'window-setup-hook 'w32-maximize-frame t)
+
+;(setq initial-frame-alist
+;      `((left . 0) (top . 0)
+;        (width . 140) (height . 42)))
 
 (when (eql system-type 'windows-nt) ; Windows
       (when (eq (shell-command "ruby") 0) 
