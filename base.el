@@ -61,6 +61,46 @@
 ;      `((left . 0) (top . 0)
 ;        (width . 140) (height . 42)))
 
+
+;
+; lisp mode (slime)
+;
+(setq load-path (cons "~/myemacs/slime" load-path))
+(require 'slime)
+(slime-setup)
+
+(setq slime-multiprocessing t)
+(setq *slime-lisp* "mlisp.exe")
+(setq *slime-port* 4006)
+
+(if nil 
+(global-set-key
+ [(f5)]
+ '(lambda ()
+    (interactive)
+    (shell-command 
+     (format "%s +B +cm -L c:/cygwin/home/dxvern/myemacs/.slime.lisp -- -p %s --ef %s &"
+	     *slime-lisp* *slime-port*
+	     slime-net-coding-system))
+    (delete-other-windows)
+    (while (not (ignore-errors (slime-connect "localhost" *slime-port*)))
+      (sleep-for 0.2))))
+
+(defun slime ()
+  (print "this is my slime")
+  (interactive)
+  (shell-command 
+   (format "%s +B +cm -L c:/cygwin/home/dxvern/myemacs/.slime.lisp -- -p %s --ef %s &"
+	   *slime-lisp* *slime-port*
+	   slime-net-coding-system))
+  (delete-other-windows)
+  (while (not (ignore-errors (slime-connect "localhost" *slime-port*)))
+    (sleep-for 0.2)))
+)
+;
+; ruby mode
+;
+
 (when (eql system-type 'windows-nt) ; Windows
       (when (eq (shell-command "ruby") 0) 
         ; !WARNING! ugly hack because of 1.8.4-20

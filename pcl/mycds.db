@@ -1,0 +1,2 @@
+
+((:artist "Lyle Lovett" :title "Lyle Lovett" :rating "4" :ripped "y") (:artist "Back in Black" :title "AC/DC" :rating "8" :ripped "n") (:artist "2112" :title "Rush" :rating "10" :ripped "n") (:artist "Bob Marley" :title "Bob Marley" :rating "7" :ripped "y") (:artist "Lilly of the Valley" :title "Kathy Mattea" :rating 6 :ripped nil) (:artist "Roses 2" :title "Kathy Mattea" :rating 7 :ripped t) (:artist "Roses" :title "Kathy Mattea" :rating 7 :ripped t)) 

@@ -1,0 +1,253 @@
+OK, then; maybe this isn't a killer Emacs setup, but at least it's seriously wounding something. 
+
+When writing my last article about Emacs, I wasn't sure whether or not anyone would actually read the article. I guess I wrote it mostly to document it properly for myself, and in the hopes that it might help other people too. Well, I just got an email from someone who found the article useful, and that really made my day! :-) In the email, he asked about the rest of my fancy-pants (I really like that word ;-) setup, and I thought I might as well document that too. By the way, I will not be mentioning any of the packages that I've covered in the previous article "Killer LaTeX Setup for OS X". 
+
+Now, before we begin with the work, I'll give you a list of what modules I'm using in my Emacs. 
+
+CEDET 
+Collection of Emacs Development Tools. To be honest, I can't really remember anymore what's in this package, but ECB requires it. 
+ECB 
+Emacs Code Browser. An excellent source code browser for Emacs. This is the package that give me the nice "frames" on each side of my Emacs window. On the left side I have the file browsing, and on the right side I have the source code browser and the "history" pane. I especially like the history pane, since it kind of replaces the need for tabs. 
+ColorTheme 
+A huge elisp package with more than 50 color themes. Probably nice to have, but I'm not sure if I actually use it. 
+htmlize.el 
+A really nice package used to create HTML documents out of your Emacs buffer. This will allow you to create proper syntax highlighted files. I used this to create the HTML version of my .emacs file. 
+redo 
+An Emacs mode that, in my opinion, fixes the broken undo/redo behavior of Emacs. It's a must-have. 
+pager.el 
+This mode fixes the borked scrolling behavior of Emacs. Again, that's just my 2 cents. ;-) Also a must-have. 
+matlab.el 
+The Emacs mode for editing Matlab code, and also for launching and running Matlab from within Emacs. I have made some modifications to this file, as to make it more useful. If you do a lot of Matlab coding, I would suggest that you install my version of the file, since it's more useful, in my not so humble opinion. 
+Now that we have presented the packages that we'll use, we can get on with the installation. Since there still are few packages that are supported in Gentoo OS X, we will do some checking first, and if necessary, add the packages and install them.
+
+Let's start off with the CEDET package, and check if portage will let us install it without any fuss. If not, we'll be able to see from the error message what action we should take.
+
+emerge app-emacs/cedet -p 
+These are the packages that I would merge, in order: 
+  
+Calculating dependencies 
+!!! All ebuilds that could satisfy "cedet" have been masked. 
+!!! One of the following masked packages is required to complete your request: 
+- app-emacs/cedet-1.0_beta3 (masked by: missing keyword) 
+  
+For more information, see MASKED PACKAGES section in the emerge man page or 
+section 2.2 "Software Availability" in the Gentoo Handbook. 
+As we can see, the CEDET package is missing the keyword, which means that the package hasn't been tested and/or approved by the Gentoo developers. But we know how to get around that, don't we? Let's fix, and install the package.
+
+mkdir -p /usr/local/portage/app-emacs/cedet/files 
+cd /usr/local/portage/app-emacs/cedet 
+cp /usr/portage/app-emacs/cedet/files/*.el files/ 
+sed 's/KEYWORDS="/KEYWORDS="ppc-macos /' /usr/portage/app-emacs/cedet/cedet-1.0_beta3.ebuild > cedet-1.0_beta3.ebuild 
+ebuild cedet-1.0_beta3.ebuild digest 
+emerge app-emacs/cedet 
+I can mention right away, that if you are having compilation problems in OS X 10.4, aka Tiger, it may be because of the new GCC version. This can easily be fixed by having the development kits installed, and just switching the GCC version like this.
+
+gcc_select 3.3 
+We now have CEDET installed, and we should continue with ECB, though the order probably doesn't really matter as long as we install CEDET before ECB. (If both packages were officially in Portage for OS X, CEDET would have been automatically installed when installing ECB.) A quick check with emerge app-emacs/ecb -p showed me that once again, we need to do some hacking.
+
+mkdir -p /usr/local/portage/app-emacs/ecb/files 
+cd /usr/local/portage/app-emacs/ecb 
+cp /usr/portage/app-emacs/ecb/files/*.el files/ 
+sed 's/KEYWORDS="/KEYWORDS="ppc-macos /' /usr/portage/app-emacs/ecb/ecb-2.31.ebuild > ecb-2.31.ebuild 
+ebuild ecb-2.31.ebuild digest 
+emerge app-emacs/ecb 
+There seems to be a bug in the ECB ebuild that makes the images go missing. This is how we'll fix that problem.
+
+mkdir /tmp/ecb 
+cd /tmp/ecb 
+cp /usr/portage/distfiles/ecb* . 
+tar zxf ecb-2.31.tar.gz 
+mv ecb*/ecb-images /usr/share/emacs/site-lisp/ecb/ 
+cd ~ 
+rm -rf /tmp/ecb 
+Let's continue with installing the ColorTheme package. If nothing else, it can be useful to browse through to see if there are any color themes that you like. As with the other packages, this one has to be hacked too.
+
+mkdir -p /usr/local/portage/app-emacs/color-theme/files 
+cd /usr/local/portage/app-emacs/color-theme 
+cp /usr/portage/app-emacs/color-theme/files/*.el files/ 
+cp /usr/portage/app-emacs/color-theme/files/*.patch files/ 
+sed 's/KEYWORDS="/KEYWORDS="ppc-macos /' /usr/portage/app-emacs/color-theme/color-theme-6.5.4.ebuild > color-theme-6.5.4.ebuild 
+ebuild color-theme-6.5.4.ebuild digest 
+emerge app-emacs/color-theme 
+We'll install htmlize.el mode the same way as the ColorTheme package. This is a really useful Emacs mode, in my opinion.
+
+mkdir -p /usr/local/portage/app-emacs/htmlize/files 
+cd /usr/local/portage/app-emacs/htmlize 
+cp /usr/portage/app-emacs/htmlize/files/*.el files/ 
+sed 's/KEYWORDS="/KEYWORDS="ppc-macos /' /usr/portage/app-emacs/htmlize/htmlize-1.16.ebuild > htmlize-1.16.ebuild 
+ebuild htmlize-1.16.ebuild digest 
+emerge app-emacs/htmlize 
+The last Emacs mode that is provided by Portage, is the redo mode. This one will have to be hacked as well. The procedure is the same as before.
+
+mkdir -p /usr/local/portage/app-emacs/redo/files 
+cd /usr/local/portage/app-emacs/redo 
+cp /usr/portage/app-emacs/redo/files/*.el files/ 
+sed 's/KEYWORDS="/KEYWORDS="ppc-macos /' /usr/portage/app-emacs/redo/redo-1.02.ebuild > redo-1.02.ebuild 
+ebuild redo-1.02.ebuild digest 
+emerge app-emacs/redo 
+The pager.el mode is rather simple to install. Here we go. All that we need to do, is to add the load path in the .emacs file. If you already have a ~/.elisp directory, skip that line. Also, if you don't want to byte-compile the *.el files you have in your ~/.elisp directory, skip the last line too.
+
+mkdir ~/.elisp 
+cd ~/.elisp 
+wget http://user.it.uu.se/~mic/pager.el 
+emacs-22.0.50 -batch -f batch-byte-compile *.el 
+The last mode is the Matlab mode that I have modified. If you don't want to read through the file, I can mention that I have added coloring to the Matlab provided functions, like for instance cos, sin, and tan. I have also modified how the commenting works. The original package indents all comments to the left margin of the page, while I have added the option of having the comments in flush with the code. Also, the comments can be set to "unindent" from the code by a given amount. (I use an unindent amount of 2 spaces.) In the tar.gz file, I have also included the original matlab.el file that my version is based on. As of writing this, the original file is up to date.
+
+cd ~/.elisp 
+wget http://www.justmy2cents.com/other/emacs/matlab.tar.gz 
+tar zxf matlab.tar.gz 
+cd matlab 
+emacs-22.0.50 -batch -f batch-byte-compile *.el 
+The last piece in this puzzle, is my .emacs (htmlized) file. I would in advance like to apologize for the profanities used in my .emacs file, but some "features" of Emacs annoyed me profoundly, and that really shines through in the comments. I will not be explaining anything of the file here, so you should look through it and pick out what you need. I hope the file is adequately commented, and if not, you'll just have to excuse my lack of adequacity, or sub-standard adequacivity if you will. If you don't have a .emacs file already, just download my file and take it from there. You will have to change some of the paths, though, so you should look through the file. If you'd like to 
+
+cd ~ 
+wget http://www.justmy2cents.com/other/emacs/.emacs 
+Well, that was that. We might come back with more additions later. There are some interesting things going on over at the MacOSTweaks Wiki page, but we'll see how adventurous I'll get. I'm just hoping that you found something useful in this article, and that your days with Emacs will suck just a little bit less. :-)
+
+As usual, feedback is nice! Or maybe a little discussion on the forums. Discuss this article on the forums. (0 posts) 
+ 
+Last Updated ( Thursday, 12 May 2005 )  
+
+
+
+----------------------------------------------------------------------------------------
+
+This weekend I took it upon me to spiffen up my Emacs and LaTeX package a little bit. As everybody knows, Emacs is the best editor you can find for OS X. Don't get me wrong, it still sucks immensely, but it happens to be the best one out there. Yes, I have tried BBEdit. And, yes, I did find it mediocre at best and immensely overpriced. It's like charging $90 for Nano. Let's get crackin', shall we? 
+Being that I'm stuck with Emacs, I might as well get the best out of it, right? After my little experiment I actually believe that no other editor could beat Emacs when it comes to LaTeX. OK, the GUI would be technically retarded if it were a person, but they might get there one of these centuries. Let's just say I'm crossing my fingers for Emacs being implemented in a toolkit which doesn't suck as much. (Using a mouse-wheel with Emacs is utterly annoying. This is actually something that manages to piss me off on a daily basis, but what the hell. I guess I had a how-to to write here. Sorry for the digression.)
+
+I guess a short introduction to the various programs and modes is in order. Here you go:
+
+Gentoo Portage for OS X 
+The package system for the best Linux distribution there is, in my humble opinion ;-) Not only is portage easy to use, but it's also very powerful. It's also the only Linux package system that I know of that runs on OS X. (Yes, I know, there is also Fink. Sorry to say so, but I think that Fink is rather completely useless. Maybe I'm just not used to the Debian way of doing things. So many angry geeks can't be wrong, can they?) 
+Emacs 
+If you don't know what Emacs is, you probably should either find out right away, or get out before there's no turning back. It will grow on you like stupid on Bush. 
+AUCTeX 
+As the creators themselves say, AUCTeX is an extensible package for writing and formatting TeX files. To put it simply, it is a must-have. 
+preview-latex 
+This Emacs mode will give you selected elements in your code rendered inline in Emacs. In other words, you will be able to see the equations, tables, etc as they will be looking when the document is done. In addition to being a very useful piece of code, it is also very intuitive in its use. When you move the cursor sideways into the figure, the TeX source code of the figure will instantly appear, and you have full control again. If the cursor is moving vertically, you just scroll past the figure. Neat, huh? Check out the screenshots for a better idea of what it looks like. It's not quite WYSIWYG, but useful nonetheless. As of upcoming versions of AUCTeX, preview-latex will be included into the AUCTeX package. 
+TeXniscope 
+The program we will use for previewing the PDF files. I guess you could use Adobe Reader, but I also guess you could chew your arm off too if you really wanted to. In other words, Adobe Reader is to practical as Internet Explorer is to security. You could also use TeXShop, but I seriously don't know if TeXShop plays along with Emacs when using pdfsync. 
+pdfsync 
+This package is truly sweet. I don't know about you, but when I read over my PDFs, I find errors and typos much much faster than when reading through the source code. With pdfsync in place, we have a quick shortcut between Emacs and the PDF. Option-click on a spot in TeXniscope and you're immediately taken to the correct spot in Emacs. Click C-c C-j in Emacs, and you'll be taken to the corresponding place in the PDF document. As I said earlier: Sweet! (To those who don't have OS X and swear by Linux only, I know that Xdvik has a similar feature that they call "Inverse search". Unfortunately, it seems that you have to use DVI files instead of PDF files. Since I don't do any coding or writing on my Gentoo box, I haven't tried this myself.) 
+cocoAspell 
+A Cocoa version of Aspell, the advanced spell checker. Ties in easily with various open-source programs. 
+latexmk 
+Is a perl script for running LaTeX the correct number of times to resolve cross references, etc; it also runs auxiliary programs (bibtex, makeindex if necessary, and dvips and/or a previewer as requested). In addition to be very useful in that respect, it can also run as a daemon, automatically compiling your TeX source every time you save the file. Pretty nifty, if you ask me. 
+Here are a couple of screenshots to show what we can expect when we're done with this little tutorial. The first screenshot shows Emacs with preview-latex enabled, and as you can see we are editing an equation. In the background we have the terminal running latexmk. The second screenshot shows TeXniscope after I have done a jump from Emacs using the pdfsync feature.
+
+
+
+First of all, to make things very easy on yourself, install Portage for OS X! Portage is Gentoo's package management system, and beats the pants off Fink, in my not so humble opinion. The downside is that it doesn't really have that many packages that have been tested and approved for OS X yet. The installation manual can be found here (or the wiki here) and should be pretty much straight forward. You will have to get your hands dirty with the terminal (Terminal.app), but I guess that's a given.
+
+Now it's time to get down with portage and get those packages installed. Let us first add the following two lines to the /etc/make.conf file using your favorite editor (or add the USE-flags you are missing to your existing USE-flags). Please note that there should not be any quotes around /usr/local/portage.
+
+USE="ppc-macos aqua emacs" 
+PORTDIR_OVERLAY=/usr/local/portage 
+In the case that you don't have the directory /usr/local/portage, you should first create it:
+
+mkdir /usr/local/portage 
+If you got error messages saying that you don't have permission, you should either log in as root in the shell (su) or prepend the commands with sudo. We must also make some changes to let Portage know that we allow it to install "risky" packages. By "risky", I mean that we will use packages that haven't been officially deemed stable, which doesn't mean that they're unstable in any sense. Just copy and paste into the terminal:
+
+mkdir /etc/portage 
+echo "app-editors/emacs-cvs" >> /etc/portage/package.keywords 
+echo "app-emacs/auctex" >> /etc/portage/package.keywords 
+echo "media-fonts/gnu-gs-fonts-std" >> /etc/portage/package.keywords 
+echo "sys-apps/freebsd-stat" >> /etc/portage/package.keywords 
+echo "app-text/ghostscript" >> /etc/portage/package.keywords 
+Please note here that the above will allow us to upgrade those programs every time there is a new version in portage. This means that if a newer version doesn't work, we kind of brought it on ourselves. Shame on us! What we can do instead, if we're afraid of borking stuff, is to only allow specific version numbers to be installed like this:
+
+echo "=app-text/ghostscript-7.07.1-r8" >> /etc/portage/package.keywords 
+Yes, I know what you're thinking! (Or, rather, what i was hoping you were thinking.) You can use ">=" and "<=" there to allow ranges of version numbers! Enough portage trivia now; Let's move on.
+
+First, we'll install freebsd-stat (unless you already have it installed), since OS X is missing a proper stat function:
+
+emerge freebsd-stat
+Now we'll install the emacs-cvs and auctex packages. Notice that we'll have to use the whole app-emacs/auctex name because there is also an XEmacs version of AUCTeX in portage.
+
+emerge emacs-cvs app-emacs/auctex
+Installing AUCTeX directly will automatically include the TeTeX package, so no need to bother with that on your own. (No more mucking around with the worst-of-breed i-Installer to get the TeTeX package installed. I've tried the i-Installer twice, and it blew equally much each time. No offense to anyone who likes it, though.) Let's turn our attention toward getting preview-latex installed on your system. Since the version of preview-latex in portage isn't the last one, we'll cheat a little. Please note that at the time of writing this, preview-latex is at 0.9.1 and the latest one in portage is at 0.8.1. This method can usually be used to install newer packages than what's available in portage. (Once again, just copy and paste.) The sed statement is used to add ppc-macos as a valid platform to the ebuild. If a ppc-macos already was included in the ebuild, we could just simply copy the ebuild-file and rename it to the new version number.
+
+mkdir -p /usr/local/portage/dev-tex/preview-latex/files 
+cd /usr/local/portage/dev-tex/preview-latex 
+sed 's/~ppc/~ppc ppc-macos/' /usr/portage/dev-tex/preview-latex/preview-latex-0.8.1.ebuild  > preview-latex-0.9.1.ebuild 
+cp /usr/portage/dev-tex/preview-latex/files/60preview-latex-gentoo.el files/ 
+ebuild preview-latex-0.9.1.ebuild digest 
+Now the preview-latex ebuild is at the latest version available, and we can install it:
+
+emerge preview-latex 
+OK, now we have most of the portage-provided packages we need, and we can turn our attention to the rest of the stuff that make up the Emacs LaTeX goodies. To enable the newly installed features, we'll put this into the ~/.emacs file:
+
+(load "/usr/share/emacs/site-lisp/site-gentoo") 
+(require 'tex-site) 
+(setq reftex-plug-into-AUCTeX t) 
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex) 
+(setq-default TeX-master nil) 
+(setq TeX-auto-save t) 
+(setq TeX-parse-self t) 
+(setq reftex-enable-partial-scans t) 
+(setq reftex-save-parse-info t) 
+(setq reftex-use-multiple-selection-buffers t) 
+(setq reftex-include-file-commands '("include" "input" "includedoc")) 
+(setq reftex-vref-is-default t) 
+(auto-fill-mode) 
+(load "preview-latex.el" nil t t) 
+(add-hook 'LaTeX-mode-hook 'LaTeX-install-toolbar) 
+We are certainly going forward, but we've got some more things to install first. Let's install a proper PDF previewer:
+
+TeXniscope. As mentioned earlier, we will be installing TeXniscope because it supports the pdfsync feature. If someone knows if TeXShop works with Emacs and pdfsync, please let me know! 
+
+
+Once you've installed TeXniscope, we can fix it a little bit (change /Path/To to whatever path you installed it to, or remove it if you installed into /Applications). Open the following file in your favorite editor:
+
+/Path/To/Applications/TeXniscope.app/Contents/Resources/txs-search.el 
+Replace all instances of "dvi" with "pdf", so that we can actually use this feature. When that is done, we can add the appropriate code to our ~/.emacs file:
+
+;; Enable the TeXniscope stuff: 
+(load (expand-file-name 
+"/Path/To/Applications/TeXniscope.app/Contents/Resources/txs-search")) 
+(add-hook 'LaTeX-mode-hook (lambda () 
+(local-set-key "C-cC-j" 'txs-jump-to-line))) 
+(setq txs-path "/Path/To/Applications/TeXniscope.app") 
+Don't forget to change the /Path/To to where you installed TeXniscope.
+
+In order to get TeXniscope to be able to communicate with Emacs, we have to start Emacs in server mode. I've solved this by making my own "fake" Emacs.app which I use to launch Emacs with. You can download it here. Just install that in your user's Applications directory.
+
+Let us configure TeXniscope too. This is what you should put in the "Paths" pane in the configuration, from top to bottom:
+
+/usr/bin/dvipdfm 
+/usr/bin:/sw/bin 
+/usr/bin/emacsclient.emacs-22.0.50 
+--no-wait -a/Path/To/Fake/Emacs.app +%line "%file" 
+/usr/bin/dvipdf 
+/usr/bin/ps2pdf 
+Now that we've installed our previewer, we can download the pdfsync here. (Get the latest version, which is version 0.6 as of typing this.) After you've downloaded it, put it somewhere in the LaTeX path, like this:
+
+tar zxf pdfsync* 
+mkdir -p /usr/share/texmf/tex/latex/pdfsync 
+cp Navigation*/LaTeX/pdfsync.sty /usr/share/texmf/tex/latex/pdfsync/ 
+When you write your LaTeX source, you have to put this into the preamble:
+
+usepackage{pdfsync} 
+Phew! This was a lot of work. Too bad we're not done yet... But we're getting awfully close now! Maybe we'll install cocoAspell so that we have proper spelling correction in Emacs? Just put this into ~/.emacs after you've installed cocoAspell:
+
+;; Enable cocoAspell to do spell checking 
+(setq ispell-program-name "/Path/To/Library/PreferencePanes/Spelling.prefPane/Contents/MacOS/cocoAspell") 
+Now, the last thing we have to do is to install the latexmk package.
+
+cd /tmp 
+wget http://www.phys.psu.edu/~collins/software/latexmk-jcc/latexmk-307a.zip 
+unzip latexmk* 
+cp latexmk.pl /usr/local/bin/latexmk 
+Let's now configure this nice tool. Put this into the file ~/.latexmkrc:
+
+$pdf_previewer = 'open -a TeXniscope.app'; 
+$pdf_update_method = 0; 
+$pscmd='ps -ww -u $ENV{USER}'; 
+And now, finally, we can make use of this whole mess! First, we'll open our file "myfile.tex" (or whatever else you might want to open) with the latexmk so that our TeX file not only will be compiled automatically on the fly every time we save the TeX file, but also that that our chosen viewer TeXniscope will be launched:
+
+latexmk -pvc -pdf -quiet myfile.tex 
+When we're all good and done, we should have a setup somewhat like shown in the screenshots provided in the beginning of this tutorial. I hope you found this how-to useful, and if you have any comments, please leave them in our forum.
+
+Discuss this article on the forums. (0 posts)
+ 
+Last Updated ( Wednesday, 06 April 2005  
