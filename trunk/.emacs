@@ -65,7 +65,7 @@
 ;
 ; lisp mode (slime)
 ;
-(setq load-path (cons "~/myemacs/slime" load-path))
+(setq load-path (cons "~/emacs/slime" load-path))
 (require 'slime)
 (slime-setup)
 
@@ -73,30 +73,31 @@
 (setq *slime-lisp* "mlisp.exe")
 (setq *slime-port* 4006)
 
-(if nil 
-(global-set-key
- [(f5)]
- '(lambda ()
-    (interactive)
-    (shell-command 
-     (format "%s +B +cm -L c:/cygwin/home/dxvern/myemacs/.slime.lisp -- -p %s --ef %s &"
-	     *slime-lisp* *slime-port*
-	     slime-net-coding-system))
-    (delete-other-windows)
-    (while (not (ignore-errors (slime-connect "localhost" *slime-port*)))
-      (sleep-for 0.2))))
+;;(if nil 
+;;(global-set-key
+;; [(f5)]
+;; '(lambda ()
+;;    (interactive)
+;;    (shell-command 
+;;     (format "%s +B +cx -L c:/cygwin/home/dxvern/.slime.lisp -- -p %s --ef %s &"
+;;	     *slime-lisp* *slime-port*
+;;	     slime-net-coding-system))
+;;   (delete-other-windows)
+;;    (while (not (ignore-errors (slime-connect "localhost" *slime-port*)))
+;;      (sleep-for 0.2))))
 
 (defun slime ()
   (print "this is my slime")
   (interactive)
   (shell-command 
-   (format "%s +B +cm -L c:/cygwin/home/dxvern/myemacs/.slime.lisp -- -p %s --ef %s &"
+   (format "%s +B +cm -L c:/cygwin/home/dxvern/emacs/misc/slime.lisp -- -p %s --ef %s --sl %s &"
 	   *slime-lisp* *slime-port*
-	   slime-net-coding-system))
+	   slime-net-coding-system
+	   "c:/cygwin/home/dxvern/emacs/slime/"))
   (delete-other-windows)
   (while (not (ignore-errors (slime-connect "localhost" *slime-port*)))
     (sleep-for 0.2)))
-)
+
 ;
 ; ruby mode
 ;
