@@ -1,9 +1,27 @@
-;(custom-set-variables 
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-;  '(nxhtml-load t))
+(require 'cl)
+
+;;--------------------------------------------------------------------- 
+;; load path
+;;---------------------------------------------------------------------
+
+(defvar emacs-root (if (or (eq system-type 'windows-nt))
+		     "c:/cygwin/home/dxvern/"
+		     "~/")) 
+
+(labels ((add-path (p)
+	 (add-to-list 'load-path
+		      (concat emacs-root p))))
+  (add-path "emacs/mylisp") 
+  (add-path "emacs/elisp") 
+  (add-path "emacs/misc")
+  (add-path "emacs/cedet/common")
+  (add-path "emacs/ecb")
+  (add-path "emacs/slime")
+  (add-path "emacs/color-theme")
+ ;(add-path "emacs/calc-2.02f") ;; fix for M-x calc on NT Emacs
+ ;(add-path "emacs/site-lisp/nxml-mode") ;; XML support
+ ;(add-path "emacs/site-lisp/tuareg-mode-1.41.5") ;; OCaml support
+  )
 
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -14,16 +32,6 @@
 
 (put 'dired-find-alternate-file 'disabled nil)
 ;;(add-to-list 'load-path "~/elisp/ruby")
-
-(global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key "\C-c\C-m" 'execute-extended-command)
-(global-set-key "\C-w" 'backward-kill-word)
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-c\C-k" 'kill-region)
-
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
 (setq resize-minibuffer-mode t)
 ;(setq resize-minibuffer-window-max-height 4)
@@ -45,46 +53,34 @@
 (setq scroll-step 1)
 (setq scroll-conservatively 5)
 
-;(highlight-current-line-on t)
-
+;(setq highlight-current-line-on t)
 ;(global-set-key [delete] 'delete-char)
-
-;(set-background-color "dark slate gray")
-;(set-foreground-color "blanched almond") 
 
 (defalias 'qrr 'query-replace-regexp)
 (defalias 'lml 'list-matching-lines)
 
 (add-hook 'window-setup-hook 'w32-maximize-frame t)
 
-;(setq initial-frame-alist
-;      `((left . 0) (top . 0)
-;        (width . 140) (height . 42)))
+;;---------------------------------------------------------------------
+;; dev tools: cedet, ecb, ruby, slime 
+;;---------------------------------------------------------------------
 
+;(load-file 
+(load-library "cedet")
+(load-library "ecb")
 
 ;
 ; lisp mode (slime)
 ;
-(setq load-path (cons "~/emacs/slime" load-path))
+(if (eq system-type 'mac-intel)
+    (setq inferior-lisp-program "~/code/osx/acl80_express/alisp") 
+  )
 (require 'slime)
 (slime-setup)
 
 (setq slime-multiprocessing t)
 (setq *slime-lisp* "mlisp.exe")
 (setq *slime-port* 4006)
-
-;;(if nil 
-;;(global-set-key
-;; [(f5)]
-;; '(lambda ()
-;;    (interactive)
-;;    (shell-command 
-;;     (format "%s +B +cx -L c:/cygwin/home/dxvern/.slime.lisp -- -p %s --ef %s &"
-;;	     *slime-lisp* *slime-port*
-;;	     slime-net-coding-system))
-;;   (delete-other-windows)
-;;    (while (not (ignore-errors (slime-connect "localhost" *slime-port*)))
-;;      (sleep-for 0.2))))
 
 (defun slime ()
   (print "this is my slime")
@@ -135,3 +131,87 @@
         (add-hook 'ruby-mode-hook
     	      '(lambda ()
     		 (inf-ruby-keys)))))
+
+
+;;---------------------------------------------------------------------
+;; keyboard
+;;---------------------------------------------------------------------
+
+(if (eq system-type 'mac-intel)
+;;option as meta
+    (setq mac-option-modifier 'meta)
+  ) 
+
+;; remap M-x to C-x C-m and C-c C-m
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+(global-set-key "\C-c\C-m" 'execute-extended-command)
+
+;; remap C-w to kill word, remap C-x C-k to kill region 
+(global-set-key "\C-w" 'backward-kill-word)
+(global-set-key "\C-x\C-k" 'kill-region)
+(global-set-key "\C-c\C-k" 'kill-region)
+
+;;---------------------------------------------------------------------
+;; tweaks
+;;---------------------------------------------------------------------
+
+(put 'dired-find-alternate-file 'disabled nil) 
+
+;;---------------------------------------------------------------------
+;; general appearance: fonts, colors, frame
+;;---------------------------------------------------------------------
+
+(if (eq system-type 'mac-intel)
+(if (t)
+(custom-set-variables 
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right. 
+ '(ecb-options-version "2.32")
+ '(mac-allow-anti-aliasing t))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful. 
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :family "apple-monaco"))))) 
+)
+)
+
+(require 'color-theme)
+(color-theme-initialize)
+;(color-theme-subtle-hacker)
+(color-theme-sitaramv-solaris)
+
+;; resize frame
+
+(if (eq system-type 'mac-intel)
+(setq initial-frame-alist
+      `((left . 0) (top . 0)
+    (width . 172) (height . 45))) 
+)
+
+;; lose the bars...
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+
+;; junk
+
+;; w3m stuff
+;(setq load-path (cons "/usr/share/emacs/site-lisp/w3m" load-path))
+;(setq load-path (cons "~/code/emacs-load" load-path))
+;(setq load-path (cons "~/code/emacs-load/g-client" load-path)) 
+
+;(require 'w3m-load)
+;(load-library "g")
+;(setq g-user-email "dtvernon@gmail.com")
+;(setq g-html-handler 'w3m-buffer)
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(ecb-options-version "2.32")
+ '(ecb-wget-setup (quote cons)))
