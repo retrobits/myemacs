@@ -192,3 +192,4 @@
  `(default ((t (:height ,(if *darwin* 120 100) 
 		:family ,(if *darwin* "apple-monaco" "Consolas"))))))
 
+(add-hook 'window-setup-hook #'(lambda () (message "happy hacking!")) t)
