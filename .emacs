@@ -175,6 +175,7 @@
 (color-theme-initialize)
 (color-theme-subtle-hacker)
 ;;(color-theme-sitaramv-solaris)
+(add-hook 'window-setup-hook #'(lambda () (message "happy hacking!")) t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -191,5 +192,3 @@
  ;; If there is more than one, they won't work right.
  `(default ((t (:height ,(if *darwin* 120 100) 
 		:family ,(if *darwin* "apple-monaco" "Consolas"))))))
-
-(add-hook 'window-setup-hook #'(lambda () (message "happy hacking!")) t)
