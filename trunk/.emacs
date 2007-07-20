@@ -61,7 +61,7 @@
     (print "this is my slime")
     (interactive)
     (shell-command 
-     (format "%s +B +cm -L %s/misc/slime.lisp -- -p %s --ef %s --sl %s/slime/ &"
+     (format "%s +B +cm -L %s/mylisp/slime.lisp -- -p %s --ef %s --sl %s/slime/ &"
 	     *slime-lisp*
 	     emacs-root
 	     *slime-port*
