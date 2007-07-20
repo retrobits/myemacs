@@ -171,6 +171,11 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-subtle-hacker)
+;;(color-theme-sitaramv-solaris)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -187,7 +192,3 @@
  `(default ((t (:height ,(if *darwin* 120 100) 
 		:family ,(if *darwin* "apple-monaco" "Consolas"))))))
 
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-subtle-hacker)
-;;(color-theme-sitaramv-solaris)
