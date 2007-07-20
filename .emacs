@@ -1,10 +1,13 @@
 (require 'cl)
 
+(defvar *darwin* (eql system-type 'darwin))
+(defvar *windows-nt* (eql system-type 'windows-nt))
+
 ;;--------------------------------------------------------------------- 
 ;; load path
 ;;---------------------------------------------------------------------
 
-(defvar emacs-root (if (eq system-type 'windows-nt)
+(defvar emacs-root (if *windows-nt*
 		       "c:/cygwin/home/dxvern/emacs"
 		     "~/emacs")) 
 
@@ -48,9 +51,9 @@
 ;; lisp mode (slime)
 (require 'slime)
 (slime-setup)
-(when (eql system-type 'darwin)
-  (setq inferior-lisp-program "~/code/osx/acl80_express/alisp")) ;add to path
-(when (eql system-type 'windows-nt) 
+(when *darwin*
+  (setq inferior-lisp-program "~/code/osx/acl80_express/alisp")) ;todo: add to path
+(when *windows-nt* 
   (setq slime-multiprocessing t)
   (setq *slime-lisp* "mlisp.exe")
   (setq *slime-port* 4006)
@@ -69,7 +72,7 @@
       (sleep-for 0.2))))
   
 ;; ruby mode
-(when (eql system-type 'windows-nt) ;; Windows
+(when *windows-nt* ;; Windows
   (when (eq (shell-command "ruby") 0) 
     ;; !WARNING! ugly hack because of 1.8.4-20
     ;;(setq config-rubyelispdir
@@ -117,8 +120,7 @@
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
 
-(when (eql system-type 'darwin)
-  (setq mac-option-modifier 'meta))
+(setq mac-option-modifier 'meta)
 
 
 ;;---------------------------------------------------------------------
@@ -148,46 +150,12 @@
 ;; general appearance: fonts, colors, frame
 ;;---------------------------------------------------------------------
 
-(when (eql system-type 'darwin)
-  (custom-set-variables 
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right. 
-   '(ecb-options-version "2.32")
-   '(mac-allow-anti-aliasing t))
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful. 
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(default ((t (:stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :family "apple-monaco"))))))
-(when (eql system-type 'windows-nt)
-  (custom-set-variables 
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right. 
-   '(ecb-options-version "2.32")
-   '(ecb-wget-setup (quote cons)))
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(default ((t (:stipple nil :background "SystemWindow" :foreground "SystemWindowText" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :family "Consolas"))))))
-
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-subtle-hacker)
-;;(color-theme-sitaramv-solaris)
-
 ;; resize frame
-(when (eql system-type 'darwin)
+(when *darwin*
   (setq initial-frame-alist
 	`((left . 0) (top . 0)
 	  (width . 172) (height . 45))))
-(when (eql system-type 'windows-nt) 
+(when *windows-nt* 
   (defun w32-restore-frame ()
     "Restore a minimized frame"
     (interactive)
@@ -202,3 +170,24 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ecb-options-version "2.32")
+ '(ecb-wget-setup (quote cons))
+ '(mac-allow-anti-aliasing t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ `(default ((t (:height ,(if *darwin* 120 100) 
+		:family ,(if *darwin* "apple-monaco" "Consolas"))))))
+
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-subtle-hacker)
+;;(color-theme-sitaramv-solaris)
