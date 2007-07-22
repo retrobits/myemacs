@@ -65,6 +65,8 @@
     (cond (next (setf location (third next)) (look))
       (t '(you cant go that way.))))) 
 
+;; try walking around...
+
 (walk-direction 'west)
 (walk-direction 'east)
 (walk-direction 'upstairs)
