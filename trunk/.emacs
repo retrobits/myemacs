@@ -30,7 +30,7 @@
 ;; w3m
 ;;---------------------------------------------------------------------
 
-(when ()				; under construction...
+(when ()				; this is under construction...
   (setq load-path (cons "/usr/share/emacs/site-lisp/w3m" load-path))
   (setq load-path (cons "~/code/emacs-load" load-path))
   (setq load-path (cons "~/code/emacs-load/g-client" load-path)) 
@@ -192,17 +192,27 @@
 (add-hook 'window-setup-hook #'(lambda () (message "happy hacking!")) t)
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(ecb-layout-name "left13")
+ '(ecb-layout-window-sizes (quote (("left13" (0.20279720279720279 . 0.9787234042553191)))))
  '(ecb-options-version "2.32")
- '(ecb-wget-setup (if *darwin* '(wget . other) '("c:/projects/pep/tools/bin/wget.exe" . windows)))
+ '(ecb-source-path (quote ("~/")))
+ '(ecb-tip-of-the-day nil)
+ '(ecb-wget-setup (if *darwin* (quote (wget . other)) (quote ("c:/projects/pep/tools/bin/wget.exe" . windows))))
  '(mac-allow-anti-aliasing t))
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  `(default ((t (:height ,(if *darwin* 120 100) 
 		:family ,(if *darwin* "apple-monaco" "Consolas"))))))
+
+
+
+
+;; `(default ((t (:height ,(if *darwin* 120 100) 
+;;		:family ,(if *darwin* "apple-monaco" "Consolas")))))
