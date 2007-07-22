@@ -199,6 +199,7 @@
  '(ecb-layout-name "left13")
  '(ecb-layout-window-sizes (quote (("left13" (0.20279720279720279 . 0.9787234042553191)))))
  '(ecb-options-version "2.32")
+ '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
  '(ecb-source-path (quote ("~/")))
  '(ecb-tip-of-the-day nil)
  '(ecb-wget-setup (if *darwin* (quote (wget . other)) (quote ("c:/projects/pep/tools/bin/wget.exe" . windows))))
@@ -211,8 +212,10 @@
  `(default ((t (:height ,(if *darwin* 120 100) 
 		:family ,(if *darwin* "apple-monaco" "Consolas"))))))
 
-
-
-
 ;; `(default ((t (:height ,(if *darwin* 120 100) 
 ;;		:family ,(if *darwin* "apple-monaco" "Consolas")))))
+
+
+
+
+
