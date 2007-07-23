@@ -48,6 +48,9 @@
 (load-library "cedet")
 (load-library "ecb")
 
+(require 'ido)
+(ido-mode t)
+
 ;; lisp mode (slime)
 (require 'slime)
 (slime-setup)
@@ -203,6 +206,7 @@
  '(ecb-source-path (quote ("~/")))
  '(ecb-tip-of-the-day nil)
  '(ecb-wget-setup (if *darwin* (quote ("wget" . other)) (quote ("c:/projects/pep/tools/bin/wget.exe" . windows))))
+ '(ido-rotate-file-list-default nil)
  '(mac-allow-anti-aliasing t))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -210,7 +214,8 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  `(default ((t (:height ,(if *darwin* 120 100) 
-		:family ,(if *darwin* "apple-monaco" "Consolas"))))))
+		:family ,(if *darwin* "apple-monaco" "Consolas")))))
+ '(ido-first-match-face ((t (:foreground "lightblue" :weight bold)))))
 
 ;; `(default ((t (:height ,(if *darwin* 120 100) 
 ;;		:family ,(if *darwin* "apple-monaco" "Consolas")))))
