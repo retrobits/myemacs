@@ -202,7 +202,7 @@
  '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
  '(ecb-source-path (quote ("~/")))
  '(ecb-tip-of-the-day nil)
- '(ecb-wget-setup (if *darwin* (quote (wget . other)) (quote ("c:/projects/pep/tools/bin/wget.exe" . windows))))
+ '(ecb-wget-setup (if *darwin* (quote ("wget" . other)) (quote ("c:/projects/pep/tools/bin/wget.exe" . windows))))
  '(mac-allow-anti-aliasing t))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
