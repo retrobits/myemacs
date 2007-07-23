@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary my emacs.
 
 = MyEmacs =
 
@@ -14,5 +14,4 @@ Packages included:
   * color-theme
   * ido
   * single folder backup/autosave
-
 
