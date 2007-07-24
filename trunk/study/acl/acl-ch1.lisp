@@ -1,10 +1,12 @@
-ANSI Common Lisp 
-Exercises from Chapter 1
+;;ANSI Common Lisp
+;;Exercises from Chapter 1
 
 1.	  
 
-a) (+ (- 5 1) (+ 3 7))
-   14
+;;a) 
+;;14
+(+ (- 5 1) (+ 3 7))
+
 	     
 b) (list 1 (+ 2 3))
    (1 5)
@@ -48,7 +50,7 @@ b) x found in list y? if so return position (zero based), else nil
 	  0
 	(let ((z (foo x (cdr y))))
 	  (and z (+ z 1))))))
-  (foo 22 '(221 2 222 3 22)))
+  (foo 3 '(221 2 222 3 22)))
 
 6.
 
@@ -78,11 +80,11 @@ a)
 
 (let ((a 1))
   (defun foo (z)
-	 (defun foo2 (x y)
-		(if (eq 0 x)
-		    y
-		    (foo2 (- x 1) (cons '* y))))
-	 (foo2 z nil))
+    (defun foo2 (x y)
+      (if (eq 0 x)
+	  y
+	  (foo2 (- x 1) (cons '* y))))
+    (foo2 z nil))
   (foo 3))
 
 b)
@@ -91,20 +93,21 @@ b)
   (defun foo (z)
     (if (null z)
 	nil
-      (if (eq (car z) 'a)
-	  1
-	(let ((h (foo x (cdr y))))
-	  (and z (+ z 1))))))
+	(if (eq (car z) 'a)
+	    1
+	    (let ((h (foo x (cdr y))))
+	      (and z (+ z 1))))))
 
 
-	(if (null x)
-	    nil
-	    (and 
-	    (+ (foo (cdr z)  (- x 1) (cons '* y))))
-	 (foo2 z nil))
+  (if (null x)
+      nil
+      (and 
+       (+ (foo (cdr z)  (- x 1) (cons '* y))))
+      (foo2 z nil))
   (foo 3))
 
-    (if (> 0 x)
-	(cons '. y)
-	(or (listp (car x)) (foo2 (cdr x)))))
-    (foo2 '(1 2 3 (4))))
+(if (> 0 x)
+    (cons '. y)
+    (or (listp (car x)) (foo2 (cdr x)))))
+
+(foo2 '(1 2 3 (4))))
