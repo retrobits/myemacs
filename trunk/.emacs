@@ -199,6 +199,10 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(ecb-compile-window-height 6)
+ '(ecb-compile-window-temporally-enlarge (quote after-selection))
+; '(ecb-compile-window-temporally-enlarge nil)
+ '(ecb-compile-window-width (quote edit-window))
  '(ecb-layout-name "left13")
  '(ecb-layout-window-sizes (quote (("left13" (0.20279720279720279 . 0.9787234042553191)))))
  '(ecb-options-version "2.32")
@@ -213,8 +217,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- `(default ((t (:height ,(if *darwin* 120 100) 
-		:family ,(if *darwin* "apple-monaco" "Consolas")))))
+ '(default ((t (:height 100 :family "Consolas"))))
  '(ido-first-match-face ((t (:foreground "lightblue" :weight bold)))))
 
 ;; `(default ((t (:height ,(if *darwin* 120 100) 
