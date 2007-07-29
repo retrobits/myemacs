@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<iSiloXDocumentList>
+
+  <iSiloXDocument>
+    <Source>
+      <Sources>
+        <!-- <Path>http://steve.yegge.googlepages.com/tour-de-babel</Path> -->
+	<!-- <Path>http://poignantguide.net/ruby/whatisit.html</Path> -->
+	<!-- <Path>http://www.rubycentral.com/book/index.html</Path> -->
+	<!-- <Path>C:\projects\isilo\svn-book.htm</Path> -->
+	<!-- <Path>http://www.gnu.org/software/emacs/manual/html_mono/elisp.html</Path> -->
+        <!-- <Path>http://gigamonkeys.com/book/</Path> -->
+
+	<!-- <Path>http://www.finseth.com/craft/</Path> -->
+	<!-- <Path>http://www.ruby-doc.org/docs/ProgrammingRuby/html/index.html</Path> -->
+	<!-- <Path>http://ecb.sourceforge.net/docs/index.html</Path> -->
+	<!-- <Path>http://common-lisp.net/project/slime/doc/html/</Path> -->
+
+	    <Path>http://www.catb.org/~esr/writings/cathedral-bazaar/</Path>
+
+	<!--
+  
+	    <Path>http://www.catb.org/~esr/writings/cathedral-bazaar/introduction/</Path>
+            <Path>http://www.catb.org/~esr/writings/cathedral-bazaar/hacker-history/</Path>
+	    <Path>http://www.catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/</Path>
+	    <Path>http://www.catb.org/~esr/writings/cathedral-bazaar/homesteading/</Path>
+	    -->
+      </Sources>
+      <CharSet>iso-8859-1</CharSet>
+    </Source>
+
+    <Destination>
+      <Title>Document</Title>
+      <!--
+	  <HotSync>
+            <Path>John Doe</Path>
+            <Path>Jane Doe:</Path>
+	  </HotSync>
+	  <ActiveSync>
+            <Path>PocketPC</Path>
+            <Path>PocketPC:</Path>
+	  </ActiveSync>
+	  -->
+      <Files>
+        <Path>.\build\cathedral2.pdb</Path>
+      </Files>
+    </Destination>
+
+    <LinkOptions>
+      <MaximumDepth             value="2"/>
+      <SubDirOnly               value="no"/>
+      <FollowOffsite            value="yes"/>
+      <MaximumOffsiteDepth      value="1"/>
+      <Exclude>
+	<!-- <Pattern>RE::.jpg</Pattern> -->
+	<Pattern>WC::*.xml</Pattern>
+	<Pattern>WC::*.pdf</Pattern>
+	<Pattern>WC::*.ps</Pattern>
+	<Pattern>WC::*.mp3</Pattern>
+	<Pattern>WC::*.avi</Pattern>
+	<Pattern>WC::*.wma</Pattern>
+	<Pattern>WC::*.mp4</Pattern>
+	<Pattern>WC::*.rm</Pattern>
+	<Pattern>WC::*.swf</Pattern>
+	<Pattern>WC::*.tar</Pattern>
+	<Pattern>WC::*.gz</Pattern>
+	<Pattern>WC::*.zip</Pattern>
+	<Pattern>WC::*.rpm</Pattern>
+	<Pattern>WC::*.patch</Pattern>
+	<Pattern>WC::*.sgml</Pattern>
+      </Exclude>
+    </LinkOptions>
+
+    <ImageOptions>
+      <AltText                  value="exclude"/>
+      <Images                   value="include"/>
+      <ResizeLargeImages        value="yes"/>
+      <MaximumWidth             value="420"/>
+      <MaximumHeight            value="420"/>
+      <ImproveContrast          value="yes"/>
+      <Dither                   value="yes"/>
+      <Compress                 value="yes"/>
+    </ImageOptions>
+
+<!--
+    <TableOptions>
+      <IgnoreTables             value="yes"/>
+      <AddSeparators            value="no"/>
+      <UseMinimumDepth          value="no"/>
+      <MinimumDepth             value="1"/>
+      <UseMaximumBottomReach    value="no"/>
+      <MaximumBottomReach       value="1"/>
+      <UnfoldFullPageTables     value="yes"/>
+      <IgnorePixelWidths        value="yes"/>
+    </TableOptions>
+-->
+    <MarginOptions>
+      <LeftRightMargins         value="ignore"/>
+      <LeftRightPadding         value="ignore"/>
+    </MarginOptions>
+
+  </iSiloXDocument>
+</iSiloXDocumentList>
