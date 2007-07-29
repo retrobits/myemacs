@@ -220,7 +220,8 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:height 100 :family "Consolas"))))
+ `(default ((t (:height ,(if *darwin* 120 100) 
+		:family ,(if *darwin* "apple-monaco" "Consolas")))))
  '(ido-first-match-face ((t (:foreground "lightblue" :weight bold)))))
 
 ;; `(default ((t (:height ,(if *darwin* 120 100) 
