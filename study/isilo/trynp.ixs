@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<iSiloXSettings>
+
+  <Logging>
+    <Conversion>
+      <Log                  value="yes"/>
+      <Path>.\log\convert.log</Path>
+    </Conversion>
+    <Connection>
+      <Log                  value="yes"/>
+      <Path>.\log\connect.log</Path>
+    </Connection>
+  </Logging>
+
+<!--
+  <Proxy>
+    <UseProxy               value="yes"/>
+    <Address>172.16.4.58</Address>
+    <Port                   value="80"/>
+    <UserName>dxvern</UserName>
+    <Password>Zugdabu06</Password>
+    <UseHTTP10              value="no"/>
+  </Proxy>
+-->
+
+  <HTTP>
+    <UserAgent>
+      <Send                 value="default"/>
+      <Name>iSiloXC/3.0 Windows/32</Name>
+    </UserAgent>
+    <Timeouts>
+      <MaxRetriesPerPage    value="3"/>
+      <MaxConnectTime       value="60"/>
+      <MaxSendTime          value="30"/>
+      <MaxReceiveTime       value="30"/>
+    </Timeouts>
+  </HTTP>
+
+</iSiloXSettings>

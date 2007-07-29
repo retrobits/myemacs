@@ -159,7 +159,6 @@
 (defalias 'qrr 'query-replace-regexp)
 (defalias 'lml 'list-matching-lines)
 
-;;(setq highlight-current-line-on t)
 ;;(global-set-key [delete] 'delete-char)
 
 
@@ -194,6 +193,10 @@
 ;;(color-theme-sitaramv-solaris)
 (add-hook 'window-setup-hook #'(lambda () (message "happy hacking!")) t)
 
+;;(global-hl-line-mode 1)
+;;(set-face-background 'hl-line "#466")
+;;(set-face-foreground 'hl-line "#fff")
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -201,7 +204,6 @@
   ;; If there is more than one, they won't work right.
  '(ecb-compile-window-height 6)
  '(ecb-compile-window-temporally-enlarge (quote after-selection))
-; '(ecb-compile-window-temporally-enlarge nil)
  '(ecb-compile-window-width (quote edit-window))
  '(ecb-layout-name "left13")
  '(ecb-layout-window-sizes (quote (("left13" (0.20279720279720279 . 0.9787234042553191)))))
@@ -209,6 +211,7 @@
  '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
  '(ecb-source-path (quote ("~/")))
  '(ecb-tip-of-the-day nil)
+ '(ecb-vc-supported-backends (quote ((ecb-vc-dir-managed-by-SVN . ecb-vc-state))))
  '(ecb-wget-setup (if *darwin* (quote ("wget" . other)) (quote ("c:/projects/pep/tools/bin/wget.exe" . windows))))
  '(ido-rotate-file-list-default nil)
  '(mac-allow-anti-aliasing t))
