@@ -20,6 +20,7 @@
   (add-path "/cedet/common")
   (add-path "/ecb")
   (add-path "/slime")
+  (add-path "/ruby")
   (add-path "/color-theme")
   ;;(add-path "calc-2.02f") ;; fix for M-x calc on NT Emacs
   ;;(add-path "site-lisp/nxml-mode") ;; XML support
@@ -30,7 +31,7 @@
 ;; w3m
 ;;---------------------------------------------------------------------
 
-(when ()				; this is under construction...
+(when ()			       ; this is under construction...
   (setq load-path (cons "/usr/share/emacs/site-lisp/w3m" load-path))
   (setq load-path (cons "~/code/emacs-load" load-path))
   (setq load-path (cons "~/code/emacs-load/g-client" load-path)) 
@@ -75,39 +76,60 @@
       (sleep-for 0.2))))
   
 ;; ruby mode
-(when *windows-nt* ;; Windows
-  (when (eq (shell-command "ruby") 0) 
-    ;; !WARNING! ugly hack because of 1.8.4-20
-    ;;(setq config-rubyelispdir
-    ;;  "misc" ) 
-    ;; get the installation directory
-    ;;(setq config-rubydir "/cygwin/usr/src/ruby-1.8.6")
-    ;;  (substring 
-    ;;   (shell-command-to-string
-    ;;    "ruby -rrbconfig -e 'puts Config::CONFIG[ \"exec_prefix\"]'") 0 -1)) 
-    ;; add the emacs lisp directory so emacs acan find it
-    (add-to-list 'load-path "/cygwin/usr/src/ruby-1.8.6-1/misc")
-    ;;(append
-    ;;	     (list (expand-file-name 
-    ;;	   config-rubyelispdir config-rubydir))
-    ;;    load-path))
-    ;; define autoloads
-    ;; from inf-ruby.el
-    (autoload 'ruby-mode "ruby-mode" 
-      "Mode for editing ruby source files" t)
-    (setq auto-mode-alist
-    	  (append '(("\\.rb$" . ruby-mode)
-    		    ("[Rr]akefile" . ruby-mode))
-    		  auto-mode-alist))
-    (setq interpreter-mode-alist (append '(("ruby" . ruby-mode))
-    					 interpreter-mode-alist))
-    (autoload 'run-ruby "inf-ruby"
-      "Run an inferior Ruby process")
-    (autoload 'inf-ruby-keys "inf-ruby"
-      "Set local key defs for inf-ruby in ruby-mode")
-    (add-hook 'ruby-mode-hook
-    	      '(lambda ()
-    		 (inf-ruby-keys)))))
+
+(autoload 'ruby-mode "ruby-mode"
+  "Mode for editing ruby source files" t)
+(setq auto-mode-alist
+      (append '(("\\.rb$" . ruby-mode)) auto-mode-alist))
+(setq interpreter-mode-alist (append '(("ruby" . ruby-mode))
+   				     interpreter-mode-alist))
+   
+;; set to load inf-ruby and set inf-ruby key definition in ruby-mode.
+
+(autoload 'run-ruby "inf-ruby"
+  "Run an inferior Ruby process")
+(autoload 'inf-ruby-keys "inf-ruby"
+  "Set local key defs for inf-ruby in ruby-mode")
+(add-hook 'ruby-mode-hook
+	  '(lambda ()
+	     (inf-ruby-keys)
+	     ))
+
+(require 'ruby-electric)
+
+;; (when *windows-nt* ;; Windows
+;;   (when (eq (shell-command "ruby") 0) 
+;;     ;; !WARNING! ugly hack because of 1.8.4-20
+;;     ;;(setq config-rubyelispdir
+;;     ;;  "misc" ) 
+;;     ;; get the installation directory
+;;     ;;(setq config-rubydir "/cygwin/usr/src/ruby-1.8.6")
+;;     ;;  (substring 
+;;     ;;   (shell-command-to-string
+;;     ;;    "ruby -rrbconfig -e 'puts Config::CONFIG[ \"exec_prefix\"]'") 0 -1)) 
+;;     ;; add the emacs lisp directory so emacs acan find it
+;;     (add-to-list 'load-path "/cygwin/usr/src/ruby-1.8.6-1/misc")
+;;     ;;(append
+;;     ;;	     (list (expand-file-name 
+;;     ;;	   config-rubyelispdir config-rubydir))
+;;     ;;    load-path))
+;;     ;; define autoloads
+;;     ;; from inf-ruby.el
+;;     (autoload 'ruby-mode "ruby-mode" 
+;;       "Mode for editing ruby source files" t)
+;;     (setq auto-mode-alist
+;;     	  (append '(("\\.rb$" . ruby-mode)
+;;     		    ("[Rr]akefile" . ruby-mode))
+;;     		  auto-mode-alist))
+;;     (setq interpreter-mode-alist (append '(("ruby" . ruby-mode))
+;;     					 interpreter-mode-alist))
+;;     (autoload 'run-ruby "inf-ruby"
+;;       "Run an inferior Ruby process")
+;;     (autoload 'inf-ruby-keys "inf-ruby"
+;;       "Set local key defs for inf-ruby in ruby-mode")
+;;     (add-hook 'ruby-mode-hook
+;;     	      '(lambda ()
+;;     		 (inf-ruby-keys)))))
 
 
 ;;---------------------------------------------------------------------
@@ -139,10 +161,10 @@
   (string-match "^#.*#$" (file-name-nondirectory filename)))
 (defun make-auto-save-file-name ()
   (concat autosave-dir
-   (if buffer-file-name
-      (concat "#" (file-name-nondirectory buffer-file-name) "#")
-    (expand-file-name
-     (concat "#%" (buffer-name) "#")))))
+	  (if buffer-file-name
+	      (concat "#" (file-name-nondirectory buffer-file-name) "#")
+	    (expand-file-name
+	     (concat "#%" (buffer-name) "#")))))
 
 (setq resize-minibuffer-mode t)
 ;;(setq resize-minibuffer-window-max-height 4)
@@ -198,10 +220,10 @@
 ;;(set-face-foreground 'hl-line "#fff")
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(ecb-compile-window-height 6)
  '(ecb-compile-window-temporally-enlarge (quote after-selection))
  '(ecb-compile-window-width (quote edit-window))
@@ -216,10 +238,10 @@
  '(ido-rotate-file-list-default nil)
  '(mac-allow-anti-aliasing t))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  `(default ((t (:height ,(if *darwin* 120 100) 
 		:family ,(if *darwin* "apple-monaco" "Consolas")))))
  '(ido-first-match-face ((t (:foreground "lightblue" :weight bold)))))
