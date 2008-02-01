@@ -224,6 +224,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ecb-cache-directory-contents (quote ((".*" . 500))))
+ '(ecb-cache-directory-contents-not nil)
  '(ecb-compile-window-height 6)
  '(ecb-compile-window-temporally-enlarge (quote after-selection))
  '(ecb-compile-window-width (quote edit-window))
@@ -231,7 +233,7 @@
  '(ecb-layout-window-sizes (quote (("left13" (0.20279720279720279 . 0.9787234042553191)))))
  '(ecb-options-version "2.32")
  '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
- '(ecb-source-path (quote ("~/")))
+ '(ecb-source-path (quote ("~/" "c:/projects" ("c:/projects/pep/Exceed/CommFW/commfw.war/xsl" "xsl"))))
  '(ecb-tip-of-the-day nil)
  '(ecb-vc-supported-backends (quote ((ecb-vc-dir-managed-by-SVN . ecb-vc-state))))
  '(ecb-wget-setup (if *darwin* (quote ("wget" . other)) (quote ("c:/projects/pep/tools/bin/wget.exe" . windows))))
@@ -242,8 +244,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- `(default ((t (:height ,(if *darwin* 120 100) 
-		:family ,(if *darwin* "apple-monaco" "Consolas")))))
+ '(default ((t (:height 100 :family "Monaco"))))
  '(ido-first-match-face ((t (:foreground "lightblue" :weight bold)))))
 
 ;; `(default ((t (:height ,(if *darwin* 120 100) 

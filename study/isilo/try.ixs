@@ -17,7 +17,7 @@
     <Address>172.16.4.58</Address>
     <Port                   value="80"/>
     <UserName>dxvern</UserName>
-    <Password>Zugdabu07</Password>
+    <Password>Zugdabu08</Password>
     <UseHTTP10              value="no"/>
   </Proxy>
 
