@@ -95,7 +95,7 @@
 	     (inf-ruby-keys)
 	     ))
 
-(require 'ruby-electric)
+;;todo (require 'ruby-electric)
 
 ;; (when *windows-nt* ;; Windows
 ;;   (when (eq (shell-command "ruby") 0) 
@@ -244,7 +244,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 100 :family "Monaco"))))
+ '(default ((t (:height 100 :family "Monospace"))))
  '(ido-first-match-face ((t (:foreground "lightblue" :weight bold)))))
 
 ;; `(default ((t (:height ,(if *darwin* 120 100) 
