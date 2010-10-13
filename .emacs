@@ -209,6 +209,30 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
+;; desktop saving
+;; save a list of open files in ~/.emacs.desktop
+;; save the desktop file automatically if it already exists
+(setq desktop-save 'if-exists)
+(desktop-save-mode 1)
+
+;; save a bunch of variables to the desktop file
+;; for lists specify the len of the maximal saved data also
+(setq desktop-globals-to-save
+      (append '((extended-command-history . 50)
+                (file-name-history        . 100)
+                (grep-history             . 50)
+                (compile-history          . 50)
+                (minibuffer-history       . 50)
+                (query-replace-history    . 60)
+                (read-expression-history  . 60)
+                (regexp-history           . 60)
+                (regexp-search-ring       . 20)
+                (search-ring              . 20)
+                (shell-command-history    . 50)
+                tags-file-name
+                register-alist)))
+
+
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-subtle-hacker)
@@ -218,6 +242,9 @@
 ;;(global-hl-line-mode 1)
 ;;(set-face-background 'hl-line "#466")
 ;;(set-face-foreground 'hl-line "#fff")
+
+(setq-default c-basic-offset 4)
+(setq-default tab-width 4)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
