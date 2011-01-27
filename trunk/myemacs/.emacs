@@ -17,8 +17,8 @@
   (add-path "/mylisp") 
   (add-path "/elisp") 
   (add-path "/misc")
-  (add-path "/cedet/common")
-  (add-path "/ecb")
+;;  (add-path "/cedet/common")
+;;  (add-path "/ecb")
   (add-path "/slime")
   (add-path "/ruby")
   (add-path "/color-theme")
@@ -46,8 +46,8 @@
 ;; dev tools: cedet, ecb, slime, ruby 
 ;;---------------------------------------------------------------------
 
-(load-library "cedet")
-(load-library "ecb")
+;;(load-library "cedet")
+;;(load-library "ecb")
 
 (require 'ido)
 (ido-mode t)
