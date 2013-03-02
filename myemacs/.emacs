@@ -1,5 +1,8 @@
 (require 'cl)
 
+; try to improve slow performance on windows.
+(setq w32-get-true-file-attributes nil)
+
 (defvar *darwin* (eql system-type 'darwin))
 (defvar *windows-nt* (eql system-type 'windows-nt))
 
@@ -8,7 +11,7 @@
 ;;---------------------------------------------------------------------
 
 (defvar emacs-root (if *windows-nt*
-		       "c:/cygwin/home/dxvern/emacs"
+		       "c:/Users/dxvern/myemacs/myemacs/emacs"
 		     "~/emacs")) 
 
 (labels ((add-path (p)
@@ -21,6 +24,7 @@
 ;;  (add-path "/ecb")
   (add-path "/slime")
   (add-path "/ruby")
+  (add-path "/psgml")
   (add-path "/color-theme")
   ;;(add-path "calc-2.02f") ;; fix for M-x calc on NT Emacs
   ;;(add-path "site-lisp/nxml-mode") ;; XML support
@@ -48,6 +52,7 @@
 
 ;;(load-library "cedet")
 ;;(load-library "ecb")
+(require 'psgml)
 
 (require 'ido)
 (ido-mode t)
@@ -74,6 +79,16 @@
     (delete-other-windows)
     (while (not (ignore-errors (slime-connect "localhost" *slime-port*)))
       (sleep-for 0.2))))
+
+
+;; powershell-mode
+
+(autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)
+(add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode)) ; PowerShell script   
+
+
+(autoload 'visual-basic-mode "visual-basic-mode"
+  "Mode for editing VB source files" t)
   
 ;; ruby mode
 
@@ -83,7 +98,7 @@
       (append '(("\\.rb$" . ruby-mode)) auto-mode-alist))
 (setq interpreter-mode-alist (append '(("ruby" . ruby-mode))
    				     interpreter-mode-alist))
-   
+
 ;; set to load inf-ruby and set inf-ruby key definition in ruby-mode.
 
 (autoload 'run-ruby "inf-ruby"
@@ -131,6 +146,13 @@
 ;;     	      '(lambda ()
 ;;     		 (inf-ruby-keys)))))
 
+(defun xml-format ()
+  (interactive)
+  (save-excursion
+    (shell-command-on-region (mark) (point) "xmllint " (buffer-name) t)
+	;;(shell-command-on-region (mark) (point) "xmllint --format -" (buffer-name) t)
+  )
+)
 
 ;;---------------------------------------------------------------------
 ;; keyboard
@@ -232,12 +254,15 @@
                 tags-file-name
                 register-alist)))
 
-
 (require 'color-theme)
+(require 'color-theme-sons-of-obsidian)
+
 (color-theme-initialize)
-(color-theme-subtle-hacker)
+;;(color-theme-subtle-hacker)
 ;;(color-theme-sitaramv-solaris)
+(color-theme-sons-of-obsidian)
 (add-hook 'window-setup-hook #'(lambda () (message "happy hacking!")) t)
+
 
 ;;(global-hl-line-mode 1)
 ;;(set-face-background 'hl-line "#466")
@@ -257,7 +282,7 @@
  '(ecb-compile-window-temporally-enlarge (quote after-selection))
  '(ecb-compile-window-width (quote edit-window))
  '(ecb-layout-name "left13")
- '(ecb-layout-window-sizes (quote (("left13" (0.20279720279720279 . 0.9787234042553191)))))
+ '(ecb-layou t-window-sizes (quote (("left13" (0.20279720279720279 . 0.9787234042553191)))))
  '(ecb-options-version "2.32")
  '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
  '(ecb-source-path (quote ("~/" "c:/projects" ("c:/projects/pep/Exceed/CommFW/commfw.war/xsl" "xsl"))))
@@ -271,11 +296,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 100 :family "Monospace"))))
+ '(default ((t (:height 120 :family "Consolas"))))
  '(ido-first-match-face ((t (:foreground "lightblue" :weight bold)))))
 
 ;; `(default ((t (:height ,(if *darwin* 120 100) 
 ;;		:family ,(if *darwin* "apple-monaco" "Consolas")))))
+
+
+;; start the server
+(server-start)
 
 
 
