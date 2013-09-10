@@ -155,6 +155,37 @@
 )
 
 ;;---------------------------------------------------------------------
+;; cygwin
+;;---------------------------------------------------------------------
+
+;;(setenv "PATH" (concat "c:/cygwin/bin;" (getenv "PATH")))
+;;(setq exec-path (cons "c:/cygwin/bin/" exec-path))
+
+;;(require 'setup-cygwin)
+;;(require 'cygwin-mount)
+
+;; (cygwin-mount-activate)
+
+;; (add-hook 'comint-output-filter-functions
+;;     'shell-strip-ctrl-m nil t)
+;; (add-hook 'comint-output-filter-functions
+;;     'comint-watch-for-password-prompt nil t)
+;; (setq explicit-shell-file-name "bash.exe")
+;; ;; For subprocesses invoked via the shell
+;; ;; (e.g., "shell -c command")
+;; (setq shell-file-name explicit-shell-file-name)
+
+;; (Defun cygwin-shell ()
+;;   "Run cygwin bash in shell mode."
+;;   (interactive)
+;;   (let 
+;; 	((explicit-shell-file-name "C:/cygwin/bin/bash"))
+;; 	(setq binary-process-input t) 
+;; 	(setq w32-quote-process-args ?\") 
+;; 	(setq explicit-bash-args '("--login" "--noediting" "-i"))
+;;     (call-interactively 'shell)))
+
+;;---------------------------------------------------------------------
 ;; keyboard
 ;;---------------------------------------------------------------------
 
@@ -256,6 +287,7 @@
 
 (require 'color-theme)
 (require 'color-theme-sons-of-obsidian)
+(require 'color-theme-dawn-night)
 
 (color-theme-initialize)
 ;;(color-theme-subtle-hacker)
